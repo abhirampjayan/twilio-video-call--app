@@ -4,15 +4,29 @@ import {
   Card,
   CardActions,
   CardContent,
+  CircularProgress,
   Container,
   TextField,
   Typography,
 } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
+import { connectToRoom, getRoomStatus } from '../store/slices/roomSlice';
 
 const JoiningScreen = () => {
-    const [roomName, setRoomName] = useState('');
+  const [roomName, setRoomName] = useState('');
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(getRoomStatus);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (roomName.trim().length) {
+      dispatch(connectToRoom(roomName));
+    }
+  };
+
   return (
     <Box
       component={Container}
@@ -21,11 +35,11 @@ const JoiningScreen = () => {
       display="flex"
       justifyContent="center"
     >
-      <Card variant="outlined" component={'form'}>
+      <Card variant="outlined" component={'form'} onSubmit={handleSubmit}>
         <Box py={4} px={4} bgcolor="secondary" minWidth={'320px'}>
           <CardContent sx={{ padding: 0 }}>
             <Typography variant="h4" color={'primary'} align="center">
-              Joint to a room
+              Join to a room
             </Typography>
             <Box py={4}>
               <TextField
@@ -43,12 +57,11 @@ const JoiningScreen = () => {
                 variant="contained"
                 size="large"
                 disableElevation
+                type="submit"
                 color={'primary'}
-                onClick={() => {
-                  setRoomName('Room Name');
-                }}
+                fullWidth
               >
-                Set Room Name
+                {status === 'connecting' ? <CircularProgress color='inherit'/> : 'Join Room'}
               </Button>
             </Box>
           </CardActions>
