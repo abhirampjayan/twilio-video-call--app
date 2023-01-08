@@ -5,53 +5,89 @@ import {
   CardActions,
   CardContent,
   CircularProgress,
-  Container,
   TextField,
   Typography,
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 import { FormEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
-import { connectToRoom, getRoomStatus } from '../store/slices/roomSlice';
+import ConfigMeet from '../components/ConfigMeet';
+
+enum PageState {
+  RoomDetails,
+  DeviceConfig,
+}
 
 const JoiningScreen = () => {
   const [roomName, setRoomName] = useState('');
-  const dispatch = useAppDispatch();
-  const status = useAppSelector(getRoomStatus);
+  const [currentScreen, setCurrentScreen] = useState(PageState.RoomDetails);
+  const [name, setName] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (roomName.trim().length) {
-      dispatch(connectToRoom(roomName));
+    if (roomName.trim().length && name.trim().length) {
+      setCurrentScreen(PageState.DeviceConfig);
     }
   };
+  const handleRoomChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setRoomName(e.target.value);
 
-  return (
+  const handleNameChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setName(e.target.value);
+
+  return false ? (
     <Box
-      component={Container}
       alignItems="center"
       minHeight="100vh"
       display="flex"
       justifyContent="center"
+      bgcolor="grey.100"
     >
-      <Card variant="outlined" component={'form'} onSubmit={handleSubmit}>
-        <Box py={4} px={4} bgcolor="secondary" minWidth={'320px'}>
+      <Box
+        variant="outlined"
+        component={Card}
+        width="100%"
+        maxWidth="500px"
+        minWidth={'320px'}
+        mx={10}
+      >
+        <Box
+          py={4}
+          px={4}
+          component={'form'}
+          onSubmit={handleSubmit}
+          bgcolor="secondary"
+        >
           <CardContent sx={{ padding: 0 }}>
-            <Typography variant="h4" color={'primary'} align="center">
+            <Typography variant="h4" color={'secondary'} align="center">
               Join to a room
             </Typography>
+            <Box pt={4}>
+              <TextField
+                fullWidth
+                placeholder="Your Name"
+                value={name}
+                onChange={handleNameChange}
+                required
+                sx={{ background: grey[100] }}
+                inputProps={{ style: { border: 'none' }, border: 'none' }}
+              />
+            </Box>
             <Box py={4}>
               <TextField
-                variant="outlined"
                 fullWidth
                 placeholder="Room Name"
                 value={roomName}
-                onChange={(e) => setRoomName(e.target.value)}
+                onChange={handleRoomChange}
+                required
+                sx={{ background: grey[100] }}
+                inputProps={{ style: { border: 'none' }, border: 'none' }}
               />
             </Box>
           </CardContent>
-          <CardActions>
+          <CardActions sx={{ padding: 0 }}>
             <Box display="flex" justifyContent="center" width="100%">
               <Button
                 variant="contained"
@@ -59,15 +95,24 @@ const JoiningScreen = () => {
                 disableElevation
                 type="submit"
                 color={'primary'}
+                sx={{ padding: '12px 12px', margin: 0 }}
                 fullWidth
               >
-                {status === 'connecting' ? <CircularProgress color='inherit'/> : 'Join Room'}
+                {status === 'connecting' ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  <Typography fontWeight={600} color="grey.100">
+                    Ready to Join
+                  </Typography>
+                )}
               </Button>
             </Box>
           </CardActions>
         </Box>
-      </Card>
+      </Box>
     </Box>
+  ) : (
+    <ConfigMeet participantName={name} roomName={roomName} />
   );
 };
 
