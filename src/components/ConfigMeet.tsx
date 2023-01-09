@@ -27,23 +27,16 @@ type Props = {
   participantName: string;
 };
 
-const ConfigMeet = (props: Props) => {
+const ConfigMeet = ({ roomName, participantName }: Props) => {
   const dispatch = useAppDispatch();
   const localTracks = useAppSelector(getLocalTracks);
   const audioMute = useAppSelector(getAudioMute);
   const videoMute = useAppSelector(getVideoMute);
   const status = useAppSelector(getTrackStatus);
-  function handleTrackEnabled(track: LocalVideoTrack) {
-    track.on('enabled', () => {
-      /* Hide the avatar image and show the associated <video> element. */
-    });
-  }
 
-  const videoTrack = useMemo(() => {
-    return localTracks.find(
-      (track) => track.kind === 'video'
-    ) as LocalVideoTrack;
-  }, [localTracks]);
+  const videoTrack = localTracks.find(
+    (track) => track.kind === 'video'
+  ) as LocalVideoTrack;
 
   useEffect(() => {
     if (!videoMute) dispatch(getLocalVideoTrack());
@@ -87,7 +80,7 @@ const ConfigMeet = (props: Props) => {
             <Grid item display="flex" alignItems="center" gap={1}>
               <VideoCameraFront color="primary" fontSize="large" />
               <Typography color="secondary" variant="h5" fontWeight="500">
-                Room Name
+                {roomName}
               </Typography>
             </Grid>
             <Grid item>
@@ -109,7 +102,7 @@ const ConfigMeet = (props: Props) => {
               </Box>
             </Grid>
             <Grid item>
-              <Typography align="center">User Name</Typography>
+              <Typography align="center">{participantName}</Typography>
             </Grid>
             <Grid item justifyContent="center" alignItems="center">
               <Box pt={3} display={'flex'} gap={2} justifyContent="center">

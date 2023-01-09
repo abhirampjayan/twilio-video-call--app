@@ -37,7 +37,7 @@ const JoiningScreen = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setName(e.target.value);
 
-  return false ? (
+  return currentScreen === PageState.RoomDetails ? (
     <Box
       alignItems="center"
       minHeight="100vh"
