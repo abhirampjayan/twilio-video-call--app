@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 import { Avatar, Box, Button, Card, Grid, Typography } from '@mui/material';
 import { useEffect, useMemo } from 'react';
-import { LocalVideoTrack } from 'twilio-video';
+import { LocalAudioTrack, LocalVideoTrack } from 'twilio-video';
 import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
 import {
   getAudioMute,
@@ -19,6 +19,7 @@ import {
   toggleAudioTrack,
   toggleVideoTrack,
 } from '../store/slices/localTrackSlice';
+import { connectToRoom } from '../store/slices/roomSlice';
 import VideoTrack from './VideoTrack';
 // import { connectToRoom, getRoomStatus } from '../store/slices/roomSlice';
 
@@ -35,9 +36,17 @@ const ConfigMeet = ({ roomName, participantName }: Props) => {
   const status = useAppSelector(getTrackStatus);
 
   const videoTrack = localTracks.find(
-    (track) => track.kind === 'video'
+    (track: LocalVideoTrack | LocalAudioTrack) => track.kind === 'video'
   ) as LocalVideoTrack;
-
+  const handleConnection = () => {
+    dispatch(
+      connectToRoom({
+        room: roomName,
+        name: participantName,
+        tracks: localTracks,
+      })
+    );
+  };
   useEffect(() => {
     if (!videoMute) dispatch(getLocalVideoTrack());
     else dispatch(removeLocalVideoTrack());
@@ -135,6 +144,7 @@ const ConfigMeet = ({ roomName, participantName }: Props) => {
                   size="large"
                   sx={{ minWidth: '150px', color: 'white' }}
                   disableElevation
+                  onClick={handleConnection}
                 >
                   Connect
                 </Button>

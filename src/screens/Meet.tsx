@@ -7,14 +7,34 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { useEffect } from 'react';
+import VideoTrack from '../components/VideoTrack';
 
-import {  useAppSelector } from '../hooks/reducAppHooks';
-import {  getRoom } from '../store/slices/roomSlice';
+import { useAppSelector } from '../hooks/reducAppHooks';
+import { getRoom } from '../store/slices/roomSlice';
 
 const Meet = () => {
   const room = useAppSelector(getRoom);
+  useEffect(() => {
+    if (room)
+      room.on('participantConnected', (participant) => {
+        console.log(`Participant "${participant.identity}" connected`);
+
+        participant.tracks.forEach((publication) => {
+          if (publication.isSubscribed) {
+            const track = publication.track;
+          }
+        });
+
+        participant.on('trackSubscribed', (track) => {});
+      });
+
+    return () => {};
+  }, []);
+
   return (
     <>
+      <VideoTrack track={null} />
       <Box
         component={AppBar}
         position="fixed"

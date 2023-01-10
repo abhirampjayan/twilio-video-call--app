@@ -1,8 +1,15 @@
 import { TwilioError } from './../../../node_modules/twilio-video/tsdef/TwilioError.d';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { connect, Room } from 'twilio-video';
+import {
+  connect,
+  LocalAudioTrack,
+  LocalTrack,
+  Room,
+  LocalVideoTrack,
+} from 'twilio-video';
 import { VIDEO_TOKEN } from '../../config';
 import { RootState } from '../store';
+import axios from 'axios';
 
 interface InitialState {
   room: Room | null;
@@ -17,8 +24,20 @@ const initialState: InitialState = {
 
 export const connectToRoom = createAsyncThunk(
   'room/Connect',
-  async (room: string) => {
-    const data = await connect(VIDEO_TOKEN, { name: room });
+  async ({
+    room,
+    name,
+    tracks,
+  }: {
+    room: string;
+    name: string;
+    tracks: (LocalAudioTrack | LocalVideoTrack)[];
+  }) => {
+    const result = await axios.post(
+      'https://video-call-4161-dev.twil.io/video-token',
+      { identity: name, room }
+    );
+    const data = await connect(result.data, { name: room, tracks });
     console.log('data', data);
     return data;
   }
