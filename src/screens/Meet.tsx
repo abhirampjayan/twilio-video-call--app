@@ -8,17 +8,22 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect } from 'react';
+import { ParticipantAudioTracks } from '../components/ParticipantAudioTracks';
 import VideoTrack from '../components/VideoTrack';
 
-import { useAppSelector } from '../hooks/reducAppHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
+import { addParticipant } from '../store/slices/participantsSclice';
 import { getRoom } from '../store/slices/roomSlice';
 
 const Meet = () => {
   const room = useAppSelector(getRoom);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (room)
       room.on('participantConnected', (participant) => {
         console.log(`Participant "${participant.identity}" connected`);
+        dispatch(addParticipant(participant));
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
             const track = publication.track;
@@ -33,6 +38,7 @@ const Meet = () => {
   return (
     <>
       <VideoTrack track={null} />
+      <ParticipantAudioTracks />
       <Box
         component={AppBar}
         position="fixed"
