@@ -19,13 +19,11 @@ const Meet = () => {
     if (room)
       room.on('participantConnected', (participant) => {
         console.log(`Participant "${participant.identity}" connected`);
-
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
             const track = publication.track;
           }
         });
-
         participant.on('trackSubscribed', (track) => {});
       });
 
