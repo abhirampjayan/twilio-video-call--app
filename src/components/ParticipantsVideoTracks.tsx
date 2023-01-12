@@ -22,7 +22,7 @@ const ParticipantVideo = ({ participant }: Props) => {
   );
 };
 
-const ParticipantsVideoTracks = (props: Props) => {
+const ParticipantsVideoTracks = () => {
   const participants = useAppSelector(getParticipants);
   //   const publications = usePublications();
 

@@ -48,7 +48,7 @@ const Meet = () => {
         width="100vw"
         padding={10}
       >
-        <ParticipantsVideoTracks />
+        <ParticipantsVideoTracks  />
       </Box>
       <ParticipantAudioTracks />
       <Box
