@@ -20,18 +20,33 @@ const Meet = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (room)
+    const el = document.getElementById('remote-media-div');
+    if (room) {
       room.on('participantConnected', (participant) => {
         console.log(`Participant "${participant.identity}" connected`);
         dispatch(addParticipant(participant));
         participant.tracks.forEach((publication) => {
           if (publication.isSubscribed) {
             const track = publication.track;
+            // if (el && track) el.appendChild(track.attach());
           }
         });
+
         participant.on('trackSubscribed', (track) => {});
       });
+      room.participants.forEach((participant) => {
+        participant.tracks.forEach((publication) => {
+          if (publication.track) {
+            // if (el && publication.track)
+              // el.appendChild(publication.track.attach());
+          }
+        });
 
+        participant.on('trackSubscribed', (track) => {
+          // if (el && track) el.appendChild(track.attach());
+        });
+      });
+    }
     return () => {};
   }, []);
 

@@ -36,7 +36,7 @@ const initialState: LocalTrackSlice = {
 
 export const getAudioAndVideoTracks = createAsyncThunk(
   'localTrack/getAudioAndVideoTracks',
-  async (state: LocalTrackSlice) => {
+  async () => {
     const {
       audioInputDevices,
       videoInputDevices,
@@ -45,8 +45,6 @@ export const getAudioAndVideoTracks = createAsyncThunk(
     } = await getDeviceInfo();
 
     if (!hasAudioInputDevices && !hasVideoInputDevices)
-      return Promise.resolve();
-    if (state.status === 'acquiring' || state.audioTrack || state.videoTrack)
       return Promise.resolve();
 
     const selectedAudioDeviceId = window.localStorage.getItem(
@@ -151,6 +149,7 @@ const localTrackSlice = createSlice({
         state.videoTrack = null;
       }
     },
+    getAudioAndVideoTracks: (state) => {},
   },
   extraReducers: (builder) => {
     builder

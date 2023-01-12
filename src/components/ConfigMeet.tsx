@@ -18,6 +18,7 @@ import {
   getVideoMute,
   toggleAudioTrack,
   toggleVideoTrack,
+  getAudioAndVideoTracks,
 } from '../store/slices/localTrackSlice';
 import { connectToRoom } from '../store/slices/roomSlice';
 import VideoTrack from './VideoTrack';
@@ -48,7 +49,7 @@ const ConfigMeet = ({ roomName, participantName }: Props) => {
     );
   };
   useEffect(() => {
-    if (!videoMute) dispatch(getLocalVideoTrack());
+    if (!videoMute) dispatch(getAudioAndVideoTracks());
     else dispatch(removeLocalVideoTrack());
     return () => {};
   }, [videoMute]);
