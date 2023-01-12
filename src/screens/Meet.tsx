@@ -1,4 +1,10 @@
-import { Mic, Settings, Videocam } from '@mui/icons-material';
+import {
+  Mic,
+  MicOff,
+  Settings,
+  Videocam,
+  VideocamOff,
+} from '@mui/icons-material';
 import {
   AppBar,
   Box,
@@ -10,9 +16,17 @@ import {
 import { useEffect } from 'react';
 import { RemoteParticipant } from 'twilio-video';
 import { ParticipantAudioTracks } from '../components/ParticipantAudioTracks';
+import ParticipantsVideoTracks from '../components/ParticipantsVideoTracks';
 import VideoTrack from '../components/VideoTrack';
 
 import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
+import {
+  getAudioMute,
+  getLocalTracks,
+  getVideoMute,
+  toggleAudioTrack,
+  toggleVideoTrack,
+} from '../store/slices/localTrackSlice';
 import {
   addParticipant,
   removeParticipant,
@@ -22,26 +36,20 @@ import { getRoom } from '../store/slices/roomSlice';
 const Meet = () => {
   const room = useAppSelector(getRoom);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const el = document.getElementById('remote-media-div');
-    // if (room) {
-    //   const participantConnected = (participant: RemoteParticipant) =>
-    //     dispatch(addParticipant(participant));
-    //   const participantDisconnected = (participant: RemoteParticipant) =>
-    //     dispatch(removeParticipant(participant));
-    //   room.on('participantConnected', participantConnected);
-    //   room.on('participantDisconnected', participantDisconnected);
-    //   return () => {
-    //     room.off('participantConnected', participantConnected);
-    //     room.off('participantDisconnected', participantDisconnected);
-    //   };
-    // }
-  }, []);
+  const audioMute = useAppSelector(getAudioMute);
+  const videoMute = useAppSelector(getVideoMute);
 
   return (
     <>
-      <VideoTrack track={null} />
+      <Box
+        sx={{ background: 'red' }}
+        display="flex"
+        height="100vh"
+        width="100vw"
+        padding={10}
+      >
+        <ParticipantsVideoTracks />
+      </Box>
       <ParticipantAudioTracks />
       <Box
         component={AppBar}
@@ -62,12 +70,33 @@ const Meet = () => {
           component={Container}
         >
           <Typography>{room?.name}</Typography>
-          <Box display="flex" gap={2}>
-            <Button variant="contained" disableElevation color="error">
-              <Mic />
+          <Box
+            display={'flex'}
+            gap={2}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Button
+              variant="contained"
+              size="large"
+              disableElevation
+              color="error"
+              sx={{ minWidth: '150px' }}
+              onClick={() => dispatch(toggleAudioTrack())}
+              startIcon={audioMute ? <MicOff /> : <Mic />}
+            >
+              {audioMute ? 'unmute' : 'mute'}
             </Button>
-            <Button variant="contained" disableElevation color="error">
-              <Videocam />
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ minWidth: '150px' }}
+              disableElevation
+              startIcon={videoMute ? <VideocamOff /> : <Videocam />}
+              color="error"
+              onClick={() => dispatch(toggleVideoTrack())}
+            >
+              {videoMute ? 'cam on' : 'cam off'}
             </Button>
           </Box>
           <Box>
