@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { RemoteAudioTrack, RemoteParticipant } from 'twilio-video';
 import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
+import useTracks from '../hooks/useTracks';
 import {
   addParticipant,
   getParticipants,
   removeParticipant,
 } from '../store/slices/participantsSclice';
-import { getRemoteTracks } from '../store/slices/remoteTrackSlice';
 import { getRoom } from '../store/slices/roomSlice';
 import AudioTrack from './AudioTrack';
 
 function Participant({ participant }: { participant: RemoteParticipant }) {
-  const tracks = useAppSelector(getRemoteTracks);
+  const tracks = useTracks(participant);
   const audioTrack = tracks.find((track) => track.kind === 'audio') as
     | RemoteAudioTrack
     | undefined;

@@ -25,18 +25,18 @@ const Meet = () => {
 
   useEffect(() => {
     const el = document.getElementById('remote-media-div');
-    if (room) {
-      const participantConnected = (participant: RemoteParticipant) =>
-        dispatch(addParticipant(participant));
-      const participantDisconnected = (participant: RemoteParticipant) =>
-        dispatch(removeParticipant(participant));
-      room.on('participantConnected', participantConnected);
-      room.on('participantDisconnected', participantDisconnected);
-      return () => {
-        room.off('participantConnected', participantConnected);
-        room.off('participantDisconnected', participantDisconnected);
-      };
-    }
+    // if (room) {
+    //   const participantConnected = (participant: RemoteParticipant) =>
+    //     dispatch(addParticipant(participant));
+    //   const participantDisconnected = (participant: RemoteParticipant) =>
+    //     dispatch(removeParticipant(participant));
+    //   room.on('participantConnected', participantConnected);
+    //   room.on('participantDisconnected', participantDisconnected);
+    //   return () => {
+    //     room.off('participantConnected', participantConnected);
+    //     room.off('participantDisconnected', participantDisconnected);
+    //   };
+    // }
   }, []);
 
   return (
