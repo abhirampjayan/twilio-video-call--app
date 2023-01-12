@@ -8,11 +8,15 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect } from 'react';
+import { RemoteParticipant } from 'twilio-video';
 import { ParticipantAudioTracks } from '../components/ParticipantAudioTracks';
 import VideoTrack from '../components/VideoTrack';
 
 import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
-import { addParticipant } from '../store/slices/participantsSclice';
+import {
+  addParticipant,
+  removeParticipant,
+} from '../store/slices/participantsSclice';
 import { getRoom } from '../store/slices/roomSlice';
 
 const Meet = () => {
@@ -22,32 +26,17 @@ const Meet = () => {
   useEffect(() => {
     const el = document.getElementById('remote-media-div');
     if (room) {
-      room.on('participantConnected', (participant) => {
-        console.log(`Participant "${participant.identity}" connected`);
+      const participantConnected = (participant: RemoteParticipant) =>
         dispatch(addParticipant(participant));
-        participant.tracks.forEach((publication) => {
-          if (publication.isSubscribed) {
-            const track = publication.track;
-            // if (el && track) el.appendChild(track.attach());
-          }
-        });
-
-        participant.on('trackSubscribed', (track) => {});
-      });
-      room.participants.forEach((participant) => {
-        participant.tracks.forEach((publication) => {
-          if (publication.track) {
-            // if (el && publication.track)
-              // el.appendChild(publication.track.attach());
-          }
-        });
-
-        participant.on('trackSubscribed', (track) => {
-          // if (el && track) el.appendChild(track.attach());
-        });
-      });
+      const participantDisconnected = (participant: RemoteParticipant) =>
+        dispatch(removeParticipant(participant));
+      room.on('participantConnected', participantConnected);
+      room.on('participantDisconnected', participantDisconnected);
+      return () => {
+        room.off('participantConnected', participantConnected);
+        room.off('participantDisconnected', participantDisconnected);
+      };
     }
-    return () => {};
   }, []);
 
   return (
