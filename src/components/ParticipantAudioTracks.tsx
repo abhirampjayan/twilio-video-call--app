@@ -34,6 +34,9 @@ export function ParticipantAudioTracks() {
 
   useEffect(() => {
     if (room) {
+      room.participants.forEach((participant) => {
+        dispatch(addParticipant(participant));
+      });
       const participantConnected = (participant: RemoteParticipant) =>
         dispatch(addParticipant(participant));
 
