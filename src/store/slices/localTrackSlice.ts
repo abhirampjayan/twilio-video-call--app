@@ -134,6 +134,7 @@ const localTrackSlice = createSlice({
         if (state.videoTrack) state.videoTrack.stop();
         state.muteVideoTrack = false;
       } else {
+        state.videoTrack?.restart();
         state.muteVideoTrack = true;
       }
     },

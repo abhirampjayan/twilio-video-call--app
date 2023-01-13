@@ -10,6 +10,7 @@ import {
 import { VIDEO_TOKEN } from '../../config';
 import { RootState } from '../store';
 import axios from 'axios';
+import {store as rootStore} from '../store'
 
 interface InitialState {
   room: Room | null;
@@ -55,6 +56,9 @@ export const roomSlice = createSlice({
       .addCase(connectToRoom.fulfilled, (state, action) => {
         state.status = 'successful';
         state.room = action.payload as unknown as Room;
+        state.room.participants.forEach((participant) => {
+          // [...state.participants, action.payload];
+        });
       })
       .addCase(connectToRoom.rejected, (state, action) => {
         state.status = 'failed';
