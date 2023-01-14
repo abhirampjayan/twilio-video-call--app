@@ -131,10 +131,10 @@ const localTrackSlice = createSlice({
     },
     toggleVideoTrack: (state) => {
       if (state.muteVideoTrack) {
-        if (state.videoTrack) state.videoTrack.stop();
+        state.videoTrack?.restart();
         state.muteVideoTrack = false;
       } else {
-        state.videoTrack?.restart();
+        if (state.videoTrack) state.videoTrack.stop();
         state.muteVideoTrack = true;
       }
     },
