@@ -42,6 +42,7 @@ const ParticipantsVideoTracks = () => {
 
   useEffect(() => {
     setGrid(Math.round(Math.sqrt(participants.length + 1)));
+    log(grid);
   }, [participants.length]);
 
   return (
@@ -50,6 +51,7 @@ const ParticipantsVideoTracks = () => {
         container
         columns={grid}
         justifyContent="center"
+        alignItems="center"
         sx={{ width: '100%', height: '100%' }}
       >
         <Grid
