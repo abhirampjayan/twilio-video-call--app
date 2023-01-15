@@ -52,14 +52,38 @@ const ParticipantsVideoTracks = () => {
         justifyContent="center"
         sx={{ width: '100%', height: '100%' }}
       >
-        <Grid item xs={1}>
-          <Box height="100%" width="100%" display="flex" p={3}>
+        <Grid
+          item
+          xs={1}
+          justifyContent={'center'}
+          alignItems="center"
+          display="flex"
+        >
+          <Box
+            sx={{ width: '100%', height: '100%' }}
+            display="flex"
+            justifyContent={'center'}
+            alignItems="center"
+            p={3}
+          >
             <VideoTrack track={videoTrack} />
           </Box>
         </Grid>
         {participants.map((participant: RemoteParticipant) => (
-          <Grid item xs={1}>
-            <Box maxHeight="100%" maxWidth="100%" display="flex" p={3}>
+          <Grid
+            item
+            xs={1}
+            justifyContent={'center'}
+            alignItems="center"
+            display="flex"
+          >
+            <Box
+              sx={{ width: '100%', height: '100%' }}
+              justifyContent={'center'}
+              alignItems="center"
+              display="flex"
+              p={3}
+            >
               <ParticipantVideo participant={participant} />
             </Box>
           </Grid>
