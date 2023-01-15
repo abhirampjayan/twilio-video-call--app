@@ -41,7 +41,9 @@ const ParticipantsVideoTracks = () => {
   ) as LocalVideoTrack;
 
   useEffect(() => {
-    setGrid(Math.round(Math.sqrt(participants.length + 1)));
+    if (participants.length == 0) setGrid(1);
+    else if (participants.length == 1) setGrid(2);
+    else setGrid(Math.round(Math.sqrt(participants.length + 1)));
     console.log(grid);
   }, [participants.length]);
 
