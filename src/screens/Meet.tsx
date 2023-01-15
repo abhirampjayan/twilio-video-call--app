@@ -42,8 +42,7 @@ const Meet = () => {
   return (
     <>
       <Box
-        sx={{ background: 'red' }}
-        display="flex"
+        display="grid"
         height="100vh"
         width="100vw"
         padding={10}

@@ -6,16 +6,16 @@ import { LocalVideoTrack, RemoteVideoTrack } from 'twilio-video';
 type Props = {
   track: LocalVideoTrack | RemoteVideoTrack | null;
 };
+
 const Video = styled('video')({
-  width: '100%',
-  height: '100%',
+  width: 'inherit',
+  height: 'inherit',
 });
 
 const VideoTrack = ({ track }: Props) => {
   const ref = useRef<HTMLVideoElement>(null!);
-  useEffect(() => {
-    track?.on('disabled', () => alert('hello'));
 
+  useEffect(() => {
     return () => {};
   }, []);
 
