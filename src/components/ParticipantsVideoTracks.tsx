@@ -42,7 +42,7 @@ const ParticipantsVideoTracks = () => {
 
   useEffect(() => {
     setGrid(Math.round(Math.sqrt(participants.length + 1)));
-    log(grid);
+    console.log(grid);
   }, [participants.length]);
 
   return (
