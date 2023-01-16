@@ -13,25 +13,17 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { useEffect } from 'react';
-import { RemoteParticipant } from 'twilio-video';
 import DeviceSelectionModel from '../components/DeviceSelectionModel';
 import { ParticipantAudioTracks } from '../components/ParticipantAudioTracks';
 import ParticipantsVideoTracks from '../components/ParticipantsVideoTracks';
-import VideoTrack from '../components/VideoTrack';
 
 import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
 import {
   getAudioMute,
-  getLocalTracks,
   getVideoMute,
   toggleAudioTrack,
   toggleVideoTrack,
 } from '../store/slices/localTrackSlice';
-import {
-  addParticipant,
-  removeParticipant,
-} from '../store/slices/participantsSclice';
 import { getRoom } from '../store/slices/roomSlice';
 
 const Meet = () => {
