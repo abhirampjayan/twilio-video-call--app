@@ -1,5 +1,5 @@
 import { MenuItem, Select } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/reducAppHooks';
 import useMediaStreamTrack from '../hooks/useMediaStreamTrack';
 import { getAllDevices, getDevices } from '../store/slices/devicesSclice';
@@ -30,7 +30,7 @@ const VideoDeviceList = (props: Props) => {
     // to display the name of the selected device when it is changed while the users camera is off.
     setStoredLocalVideoDeviceId(newDeviceId);
     window.localStorage.setItem(SELECTED_VIDEO_INPUT_KEY, newDeviceId);
-    dispatch(restartVideoTracks);
+    dispatch(restartVideoTracks());
   }
 
   useEffect(() => {
