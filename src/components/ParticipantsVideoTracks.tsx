@@ -1,10 +1,8 @@
 import { Box, Container, Grid } from '@mui/material';
-import { height } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   LocalAudioTrack,
   LocalVideoTrack,
-  Participant,
   RemoteParticipant,
 } from 'twilio-video';
 import { useAppSelector } from '../hooks/reducAppHooks';

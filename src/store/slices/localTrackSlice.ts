@@ -150,7 +150,16 @@ const localTrackSlice = createSlice({
         state.videoTrack = null;
       }
     },
-    getAudioAndVideoTracks: (state) => {},
+    restartVideoTracks: (state, action) => {
+      if (state.videoTrack) {
+        state.videoTrack.restart({
+          ...(DEFAULT_VIDEO_CONSTRAINTS as {}),
+          deviceId: {
+            exact: action.payload,
+          },
+        });
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -192,6 +201,7 @@ export const {
   removeLocalVideoTrack,
   toggleAudioTrack,
   toggleVideoTrack,
+  restartVideoTracks,
 } = localTrackSlice.actions;
 
 export const getVideoTrack = (state: RootState) => state.localTrack.videoTrack;

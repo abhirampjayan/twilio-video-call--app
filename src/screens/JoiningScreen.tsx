@@ -12,6 +12,7 @@ import { grey } from '@mui/material/colors';
 
 import { FormEvent, useState } from 'react';
 import ConfigMeet from '../components/ConfigMeet';
+import DeviceSelectionModel from '../components/DeviceSelectionModel';
 
 enum PageState {
   RoomDetails,

@@ -21,6 +21,7 @@ import {
   getAudioAndVideoTracks,
 } from '../store/slices/localTrackSlice';
 import { connectToRoom } from '../store/slices/roomSlice';
+import DeviceSelectionModel from './DeviceSelectionModel';
 import VideoTrack from './VideoTrack';
 // import { connectToRoom, getRoomStatus } from '../store/slices/roomSlice';
 
@@ -138,6 +139,7 @@ const ConfigMeet = ({ roomName, participantName }: Props) => {
                 >
                   {videoMute ? 'cam on' : 'cam off'}
                 </Button>
+                <DeviceSelectionModel />
               </Box>
               <Box pt={3} display={'flex'} gap={2} justifyContent="center">
                 <Button

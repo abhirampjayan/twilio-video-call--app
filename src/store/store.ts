@@ -3,6 +3,7 @@ import roomReducer from './slices/roomSlice';
 import localTrackReducer from './slices/localTrackSlice';
 import participantsReducer from './slices/participantsSclice';
 import remoteTrackReducer from './slices/remoteTrackSlice';
+import devicesReducer from './slices/devicesSclice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     localTrack: localTrackReducer,
     participants: participantsReducer,
     remoteTracks: remoteTrackReducer,
+    devices: devicesReducer,
   },
 });
 
