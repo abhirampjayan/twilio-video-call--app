@@ -22,9 +22,9 @@ const VideoTrack = ({ track }: Props) => {
   useEffect(() => {
     const el = ref.current;
     el.muted = true;
-    if (track !== null) track.attach(el);
+    if (track !== null && track) track.attach(el);
     return () => {
-      if (track !== null) track.detach(el);
+      if (track !== null && track) track.detach(el);
       el.srcObject = null;
     };
   }, [track]);

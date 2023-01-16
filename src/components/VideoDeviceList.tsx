@@ -30,7 +30,7 @@ const VideoDeviceList = (props: Props) => {
     // to display the name of the selected device when it is changed while the users camera is off.
     setStoredLocalVideoDeviceId(newDeviceId);
     window.localStorage.setItem(SELECTED_VIDEO_INPUT_KEY, newDeviceId);
-    dispatch(restartVideoTracks(storedLocalVideoDeviceId));
+    dispatch(restartVideoTracks(newDeviceId));
   }
 
   useEffect(() => {
