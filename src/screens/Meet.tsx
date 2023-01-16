@@ -1,7 +1,9 @@
 import {
+  DoorFront,
   Mic,
   MicOff,
   Settings,
+  Unpublished,
   Videocam,
   VideocamOff,
 } from '@mui/icons-material';
@@ -13,6 +15,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { useEffect } from 'react';
 import DeviceSelectionModel from '../components/DeviceSelectionModel';
 import { ParticipantAudioTracks } from '../components/ParticipantAudioTracks';
 import ParticipantsVideoTracks from '../components/ParticipantsVideoTracks';
@@ -24,7 +27,7 @@ import {
   toggleAudioTrack,
   toggleVideoTrack,
 } from '../store/slices/localTrackSlice';
-import { getRoom } from '../store/slices/roomSlice';
+import { disconnectRoom, getRoom } from '../store/slices/roomSlice';
 
 const Meet = () => {
   const room = useAppSelector(getRoom);
@@ -34,13 +37,8 @@ const Meet = () => {
 
   return (
     <>
-      <Box
-        display="grid"
-        height="100vh"
-        width="100vw"
-        padding={10}
-      >
-        <ParticipantsVideoTracks  />
+      <Box display="grid" height="100vh" width="100vw" padding={10}>
+        <ParticipantsVideoTracks />
       </Box>
       <ParticipantAudioTracks />
       <Box
@@ -92,11 +90,17 @@ const Meet = () => {
             </Button>
             <DeviceSelectionModel />
           </Box>
-          <Box>
-            <IconButton>
-              <Settings />
-            </IconButton>
-          </Box>
+          <Button
+            variant="contained"
+            size="large"
+            disableElevation
+            color="error"
+            sx={{ minWidth: '150px' }}
+            onClick={() => dispatch(disconnectRoom())}
+            startIcon={<DoorFront />}
+          >
+            Disconnect
+          </Button>
         </Box>
       </Box>
     </>

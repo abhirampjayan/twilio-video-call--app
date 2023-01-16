@@ -62,7 +62,7 @@ const ParticipantsVideoTracks = () => {
           display="flex"
         >
           <Box
-            sx={{ width: '100%', height: '100%' }}
+            sx={{ width: '100%', height: '400px' }}
             display="flex"
             justifyContent={'center'}
             alignItems="center"
@@ -83,6 +83,7 @@ const ParticipantsVideoTracks = () => {
               sx={{ width: '100%', height: '100%' }}
               justifyContent={'center'}
               alignItems="center"
+              maxHeight={'400px'}
               display="flex"
               p={3}
             >

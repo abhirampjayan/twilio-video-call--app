@@ -8,8 +8,8 @@ type Props = {
 };
 
 const Video = styled('video')({
-  width: 'inherit',
-  height: 'inherit',
+  width: '100%',
+  maxHeight: '400px',
 });
 
 const VideoTrack = ({ track }: Props) => {

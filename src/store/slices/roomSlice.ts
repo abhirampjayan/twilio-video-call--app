@@ -10,7 +10,7 @@ import {
 import { VIDEO_TOKEN } from '../../config';
 import { RootState } from '../store';
 import axios from 'axios';
-import {store as rootStore} from '../store'
+import { store as rootStore } from '../store';
 
 interface InitialState {
   room: Room | null;
@@ -47,7 +47,12 @@ export const connectToRoom = createAsyncThunk(
 export const roomSlice = createSlice({
   name: 'room',
   initialState,
-  reducers: {},
+  reducers: {
+    disconnectRoom: (state) => {
+      if (state.room) state.room.disconnect();
+      state.room = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(connectToRoom.pending, (state) => {
@@ -56,9 +61,6 @@ export const roomSlice = createSlice({
       .addCase(connectToRoom.fulfilled, (state, action) => {
         state.status = 'successful';
         state.room = action.payload as unknown as Room;
-        state.room.participants.forEach((participant) => {
-          // [...state.participants, action.payload];
-        });
       })
       .addCase(connectToRoom.rejected, (state, action) => {
         state.status = 'failed';
@@ -67,7 +69,7 @@ export const roomSlice = createSlice({
   },
 });
 
-export const {} = roomSlice.actions;
+export const {disconnectRoom} = roomSlice.actions;
 export default roomSlice.reducer;
 
 export const getRoom = (state: RootState) => state.room.room;
