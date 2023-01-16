@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { useEffect } from 'react';
 import { RemoteParticipant } from 'twilio-video';
+import DeviceSelectionModel from '../components/DeviceSelectionModel';
 import { ParticipantAudioTracks } from '../components/ParticipantAudioTracks';
 import ParticipantsVideoTracks from '../components/ParticipantsVideoTracks';
 import VideoTrack from '../components/VideoTrack';
@@ -97,6 +98,7 @@ const Meet = () => {
             >
               {videoMute ? 'cam on' : 'cam off'}
             </Button>
+            <DeviceSelectionModel />
           </Box>
           <Box>
             <IconButton>
